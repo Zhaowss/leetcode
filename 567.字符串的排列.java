@@ -11,48 +11,44 @@ import java.util.HashMap;
 class Solution {
     public boolean checkInclusion(String s1, String s2) {
         // 首先分析此意，其实就是说S1是s2的子字符串
+       char[] str1= s1.toCharArray();
+       char[] str2= s2.toCharArray();
+       HashMap<Character,Integer> need=new HashMap<>();
+       HashMap<Character,Integer> window=new HashMap<>();
+       for (char c : str1) {
+        need.put(c, need.getOrDefault(c, 0)+1);
+       }
+       int left=0;//左指针
+       int falg=0;
 
-        HashMap<Character,Integer> myhashmap=new HashMap<>();
-        HashMap<Character,Integer> windowHashMap=new HashMap<>();
-        for (char s : s1.toCharArray()) {
-         myhashmap.put(s,myhashmap.getOrDefault(s,0)+1);
+       for (int right = 0; right < str2.length; right++) {
+
+
+        if (need.containsKey(str2[right])) {
+            window.put(str2[right], window.getOrDefault(str2[right], 0)+1);
+            if (window.get(str2[right]).equals(need.get(str2[right]))) {
+                falg++;
+            }
         }
-        // 完成目标的哈希表的构建之后
+        // 此时窗口满足条件
+        while (falg==need.size()) {
 
-        int left=0,right=0,val=0;
-        while (right<s2.length()) {
-            // 滑动窗口的右边界 
-            char x=s2.charAt(right);
-            right++;
-
-            // 搜索可行的解
-            // 该数值包含在目标值之中
-            if(myhashmap.containsKey(x)){
-                windowHashMap.put(x, windowHashMap.getOrDefault(x, 0)+1);
-                if(windowHashMap.get(x).equals(myhashmap.get(x))){
-                    val++;
-                }
-            } 
-            // 搜索最优的结果
-            while (right-left>=s1.length()) {   
-
-            //  System.out.println(myhashmap.size());
-            //  System.out.println(s1.length());
-             if (val==myhashmap.size()) {
+            if (right-left+1==s1.length()) {
                 return true;
-             }
+            }
+            if (need.containsKey(str2[left])) {
 
-             char sz=s2.charAt(left);
-             left++;
-             if (myhashmap.containsKey(sz)) {
-                if (myhashmap.get(sz).equals(windowHashMap.get(sz))) 
-                      val--;
-                windowHashMap.put(sz, windowHashMap.getOrDefault(sz, 0)-1);
-             }
+                if (need.get(str2[left]).equals(window.get(str2[left]))) {
+                    falg--;
+                }
+
+                window.put(str2[left], window.get(str2[left])-1);
+              
+            }
+            left++;  
         }
-    }
-     return false;
-
+       }
+       return false;
 
     }
 }

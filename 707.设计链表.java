@@ -9,77 +9,91 @@
 import java.util.List;
 
 class MyLinkedList {
-    int size;
+    // 作为链表的俩个元素，就是链表的节点和链表的大小
+
+    int  size;
     ListNode head;
-
-    public MyLinkedList() {
-       head=new ListNode(-1);
+    // 初始化的方法。
+    MyLinkedList(){
+        head=new ListNode(-1);
     }
-    
-    public int get(int index) {
-       if (index<0 || index>=size) {
-        return -1;
-       }
-       ListNode arr=head;
 
-       while (index>=0) {
-        arr=arr.next;
-        index--;
-       }
-       return arr.val;
-    }
-    
-    public void addAtHead(int val) {
-        ListNode p=head;
-        ListNode next1=p.next;
-        p.next=new ListNode(val);
-        p.next.next=next1;
-        size++;
-    }
-    
-
-    public void addAtTail(int val) {
-        ListNode p=head;
-        while (p.next!=null) {
-            p=p.next;
+    // 获取链表中下标为index的节点的数值。
+    int get(int index) {
+        if (index<0 || index >=size) {
+            return -1;
         }
-        p.next=new ListNode(val);
-        p.next.next=null;
-        size++;
-    }
-    
-
-    public void addAtIndex(int index, int val) {
-        if (index<0 || index > size) {
-            return;
-        }
-        ListNode p=head;
-        while (index>0) {
-            p=p.next;
+        ListNode cur=head;
+        while (index>=0) {
+            cur=cur.next;
             index--;
         }
+        return cur.val;
+    }
 
-        ListNode node=p.next;
-        p.next=new ListNode(val);
-        p.next.next= node;
+    void addAtHead(int val){
+
+        ListNode cur=head;
+        // 记录之前的头节点的下一个节点
+        ListNode next=cur.next;
+        //重新设置当前的节点
+        cur.next=new ListNode(val);
+        //设置当前新的头节点的下一个节点。
+        cur.next.next=next;
         size++;
     }
-    
 
-    public void deleteAtIndex(int index) {
-        if (index<0 || index >= size)  {
-            return;
+    void addAtTail(int val) {
+        ListNode cur=head;
+        while (cur.next!=null) {
+            cur=cur.next;
         }
-        ListNode p=head;
+        cur.next=new ListNode(val);
+        cur.next.next=null;
+        size++;
+    }
+
+    void addAtIndex(int index, int val){
+        ListNode cur=head;
+        if (index<0 || index>size) {
+           return;
+        }
 
         while (index>0) {
-            p=p.next;
+            cur=cur.next;
             index--;
         }
-        ListNode next=p.next.next;
-        p.next=next;
+        //此时的cur为我们插入节点的前一个节点
+        ListNode next=cur.next;
+        cur.next=new ListNode(val);
+        cur.next.next=next;
+        size++;
+    }
+
+    void deleteAtIndex(int index){
+        if (index<0 || index>=size) {
+            return;
+         }
+
+         ListNode cur=head;
+
+        while (index>0) {
+           cur=cur.next;
+           index--;
+        }
+
+        cur.next=cur.next.next;
+
         size--;
+
     }
+
+
+
+
+
+
+    
 }
 
 /**

@@ -45,22 +45,19 @@ import java.util.List;
 
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dumpy=new ListNode(-1);
-        dumpy.next=head;
-        ListNode p=dumpy,p2=dumpy;
-        // 定义一个双指针操作；
-        for (int i = 0; i < n; i++) {
-          p=p.next;
-        }
-        // 快指针先走
-        // 判断其到啦最后一个元素的位置即应该就是p.next!=null
-        while (p.next!=null) {
-            p=p.next;
-            p2=p2.next;
-        }
+       ListNode dummy=new ListNode(-1,head);
+       ListNode p1=dummy, p2=dummy,temp=null;
 
+       for (int i = 0; i <n; i++) {
+          p1=p1.next;
+       }
+       while (p1.next!=null) {
+        temp=p1;
+        p1=p1.next;
+        p2=p2.next;
+       }
         p2.next=p2.next.next;
-        return p;
+       return dummy.next;
     }
 }
 // @lc code=end

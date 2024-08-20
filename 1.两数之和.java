@@ -10,19 +10,17 @@ import java.util.HashMap;
 
 class Solution {
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer,Integer> map=new HashMap<>();
-        int[] xx=new int[2];
-        for(int i=0; i<nums.length;i++){
-            map.put(nums[i],i);
+       HashMap<Integer,Integer> hashMap=new HashMap<>();
+    //   将其每个元素及其下标存入；
+       for (int i = 0; i < nums.length; i++) {
+        hashMap.put(nums[i], i);
+       }
+       for (int i = 0; i < nums.length; i++) {
+        if (hashMap.containsKey(target-nums[i]) && i!=hashMap.get(target-nums[i])) {
+            return new int[]{i,hashMap.get(target-nums[i])};
         }
-        for (int i = 0; i < nums.length; i++) {
-            int value=target-nums[i];
-            if(map.get(value) != null && map.get(value)!=i){
-            xx[0]=i;
-            xx[1]=map.get(value);
-            }
-        }
-        return xx;
+       }
+       return new int[]{};
 
     }
 }

@@ -6,30 +6,27 @@
 
 // @lc code=start
 class Solution {
-    public int[] sortedSquares(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
-                nums[i]=nums[i]*nums[i];
-        }
-        sort(nums);
-        return nums;      
-    }
-    void sort(int[] nums){
-       for (int i = 0; i < nums.length; i++) {
-        int maxindex=i;
-        for (int j = i+1; j < nums.length; j++) {
-        maxindex=nums[j]>nums[maxindex]? j:maxindex;   
-        swap(nums,maxindex,j);
-        }       
-       }     
-    }
 
-    void swap(int [] nums,int i,int j){
-        int temp=nums[i];
-        nums[i]=nums[j];
-        nums[j]=temp;
+    public int[] sortedSquares(int[] nums) {
+    
+      int[] res=new int[nums.length];
+
+      int left=0;
+      int right=nums.length-1;
+      int count=nums.length-1;
+      while (left<=right) {
+        if (Math.abs(nums[left])>Math.abs(nums[right])) {
+            res[count--]=nums[left]*nums[left];
+            left++;
+        }else if (Math.abs(nums[left])<=Math.abs(nums[right])) {
+             res[count--]=nums[right]*nums[right];
+             right--;
+        }
+      }
+      return res;
+
     }
- 
 
 }
 // @lc code=end
-
+ 

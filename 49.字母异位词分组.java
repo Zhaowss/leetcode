@@ -7,35 +7,23 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
 
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
-
-    HashMap<String,List<String>> hash=new HashMap<>();
-
-
-    List<List<String>> myList=new ArrayList<>();
-    
-
-    int left=0,right=0;
-
-    while (right<strs.length) {
-
-        String cString=strs[right];
-
-        
-
-        
-    }
-
-
-
-    }
-   
-
+    HashMap<String,List<String>> res=new HashMap<>();
+    for (String string : strs) {
+        char[] rz=string.toCharArray();
+        Arrays.sort(rz);
+        List<String> aList=res.getOrDefault(String.valueOf(rz),new ArrayList<String>());
+        aList.add(string);
+        res.put(String.valueOf(rz), aList);
+    } 
+    return new ArrayList<>(res.values());
+}
 }
 // @lc code=end
 

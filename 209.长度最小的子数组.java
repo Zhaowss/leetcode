@@ -7,21 +7,21 @@
 // @lc code=start
 class Solution {
     public int minSubArrayLen(int target, int[] nums) {
-    //  字串子序列可以考虑使用我们的滑动窗口；
+        int left=0;
+        int sum=0;
+        int res=Integer.MAX_VALUE;
 
-    int right=0;
-    int left=0;
-    int min_len=Integer.MAX_VALUE;
-    int sum=0;
-    while (right<nums.length) {
-        sum+=nums[right];
-        while (sum>=target) {
-        min_len=Math.min(min_len,right-left+1);
-        sum=sum-nums[left];
-        left++;
-        }  
-    } 
-    return min_len;
+        for (int right= 0; right < nums.length; right++) {
+            //窗口的右边，不断向右前行
+            sum+=nums[right];
+            //如果当前的n个元素的和大于这个target的时候。
+            // 开始进行窗口的自旋，左边界收缩。
+           while (sum>=target) {
+             res=Math.min(res, right-left+1);
+             sum -= nums[left++];
+           }
+        }
+        return res==Integer.MAX_VALUE?0:res;
 }
     
  }

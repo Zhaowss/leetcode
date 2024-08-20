@@ -8,17 +8,15 @@
 // 使用快慢指针实现元素的删除 在数组中
 class Solution {
     public int removeElement(int[] nums, int val) {
-       int fast=0;
-       int slow=0;
-       for (int i = 0; i < nums.length; i++) {
-         if (nums[fast]!=val) {
-         nums[slow++]=nums[fast++];
-         }else{
-            fast++;
-         }
-       }
-       return slow;
+    
+      int slow=0;
+      for (int i = 0; i < nums.length; i++) {
+        if (nums[i]!=val) {
+          nums[slow++]=nums[i];
+        }
+      }
 
+      return slow;
     }
 }
 // @lc code=end

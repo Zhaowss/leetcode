@@ -7,7 +7,12 @@
 // @lc code=start
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
+
+
 
 /**
  * Definition for a binary tree node.
@@ -26,19 +31,46 @@ import java.util.List;
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
-        List nList=new ArrayList<>();
-        gainList(root,nList);
-        return nList;
-    }
-    public List gainList(TreeNode root,List<Integer> aList){
+        List<Integer> arr=new ArrayList<>();
+
+
+        Deque<TreeNode>  deque=new LinkedList<>();
+        deque.push(root);
         if (root==null) {
-            return null;
+            return arr;
         }
-        gainList(root.left, aList);
-        gainList(root.right, aList);
-        aList.add(root.val);
-        return aList;
+        // 出栈的顺序是 左 右 中
+        // 入栈的顺序是 中 右 左
+
+        while (!deque.isEmpty()) {
+
+            root=deque.pop();
+            arr.add(root.val);    
+            if (root.left!=null) {
+                deque.push(root.left);
+            }
+            if (root.right!=null) {
+                deque.add(root.right);
+            }
+            //按照这情况 出栈的时候为 中右左
+        }
+        Collections.reverse(arr);
+        return arr;
     }
+    //     gainList(root,nList);
+    //     return nList;
+    // }
+    // public static void gainList(TreeNode root,List<Integer> list)
+    // {
+
+    //     if (root==null) {
+    //         return ;
+    //     }
+        
+    //     gainList(root.left, list);
+    //     gainList(root.right, list);
+    //     list.add(root.val);
+    // }
 }
 // @lc code=end
 

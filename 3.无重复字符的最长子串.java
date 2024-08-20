@@ -8,33 +8,26 @@
 
 import java.util.HashMap;
 
-
 class Solution {
     public int lengthOfLongestSubstring(String s) {
+       HashMap<Character,Integer> hs= new HashMap<>();
+       int left=0,res=0;
 
-        int right=0,left=0,max=0;
-        HashMap<Character,Integer> myarr=new HashMap<>();
-        while (right<s.length()) {
-            //
-            char a=s.charAt(right);
-            right++;
-            myarr.put(a, myarr.getOrDefault(a, 0)+1);
-            while(myarr.get(a)>1){
+       for (int right = 0; right <s.length(); right++) {
+        //添加元素
+        hs.put(s.charAt(right), hs.getOrDefault(s.charAt(right), 0)+1);
 
-                char d=s.charAt(left);
-                left++;
-
-                if (myarr.containsKey(d)) {
-                    myarr.put(d,myarr.getOrDefault(d, 0)-1);
-                }
-            }
-            
-            max=Math.max(max, right-left);
-            // 寻找可行解
-           
+        while (hs.get(s.charAt(right))>1) {
+            hs.put(s.charAt(left), hs.get(s.charAt(left))-1);
+            left++;
         }
-        return max;
 
+        res=Math.max(res, right-left+1);
+        
+       }
+        return res;
+
+       
     }
 }
 // @lc code=end

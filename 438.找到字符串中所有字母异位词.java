@@ -12,42 +12,51 @@ import java.util.List;
 
 class Solution {
     public List<Integer> findAnagrams(String s, String p) {
-    HashMap<Character,Integer> myHashMap=new HashMap<>();
-    HashMap<Character,Integer> windowHashMap=new HashMap<>();
-    for (char x : p.toCharArray()) {
-        myHashMap.put(x, myHashMap.getOrDefault(x, 0)+1);
-    }
-    List<Integer> mList=new ArrayList<>();
-    int right=0,left=0,val=0;
-
-    while (right<s.length()) {
-        // 首先窗口右边接受数据
-        char c=s.charAt(right);
-        right++;
-        // 寻找可行解
-        if (myHashMap.containsKey(c)) {
-            windowHashMap.put(c, windowHashMap.getOrDefault(c, 0)+1);
-            if (windowHashMap.get(c).equals(myHashMap.get(c))) {
-                val++;
-            }
+        char[] s1=s.toCharArray();
+        char[] p1=p.toCharArray();
+        HashMap<Character,Integer> window=new HashMap<Character,Integer>();
+        HashMap<Character,Integer> need=new HashMap<Character,Integer>();
+        for (char c : p1) {
+            need.put(c, need.getOrDefault(c, 0)+1);
         }
-        // 设置优化的循环判断条件
-        while(right-left>=p.length()){
-            if (val==myHashMap.size()) {
-                mList.add(left);
-            }
-            char o=s.charAt(left);
-            left++;
-            if (myHashMap.containsKey(o)) {
-                if (myHashMap.get(o).equals(windowHashMap.get(o))) {
-                    val--;
+
+        int left=0,valid=0;
+        ArrayList<Integer> alArrayList=new ArrayList<>();
+
+        for (int right = 0; right < s1.length; right++) {
+
+            // 添加元素
+            char cs=s1[right];
+            if (need.containsKey(cs)) {
+                window.put(cs,window.getOrDefault(cs,0)+1);
+                if (window.get(cs).equals(need.get(cs))) {
+                    valid++;
                 }
-                windowHashMap.put(o, windowHashMap.getOrDefault(o,0)-1);
-            }
-        }
-    }
+            } 
+            while (valid==need.size()) {
+                if (right-left+1==p.length()) {
+                    alArrayList.add(left);
+                }
 
-    return mList;
+                if (need.containsKey(s1[left])) {
+                    
+                    if (need.get(s1[left]).equals(window.get(s1[left]))) {
+                        valid--;
+                    }
+                    window.put(s1[left],window.get(s1[left])-1);
+                }
+                left++;
+            }
+            
+        }
+
+        return alArrayList;
+
+
+
+
+
+   
     }
 }
 // @lc code=end

@@ -28,27 +28,50 @@ class Node {
 };
 */
 
+import java.util.Deque;
+import java.util.LinkedList;
+ 
+
 
 class Solution {
     public Node connect(Node root) {
+    Node ans=root;
     if (root==null) {
         return null;
     }
-     connect1(root.left,root.right);
-     return root;
-    }
-
-
-    public void connect1(Node root1,Node root2){
-    if (root1==null || root2==null) {
-        return;
-    }
+    // 本质层序遍历，然后将其里面的每个节点指向其对应层中的下一个节点
+    Deque<Node> aDeque=new LinkedList<>();
+    aDeque.offer(root);
+    Node pre=null;
+    while (!aDeque.isEmpty()) {
+        int len=aDeque.size();
+        while (len>0) {
+            root=aDeque.pop();
+            if (pre!=null) {
+                pre.next=root;   
+            }
     
-    root1.next=root2;
-    connect1(root1.left, root1.right);
-    connect1(root2.left, root2.right);
-    connect1(root1.right, root2.left);
+            if (root.left!=null) {
+                aDeque.offer(root.left);
+            }
+    
+            if (root.right!=null) {
+                aDeque.offer(root.right);
+            }
+            len--;
+            if (len==0) {
+                root.next=null;
+                pre=null;
+    
+            }else{
+                pre=root;
+            }           
+        }
     }
+
+    return ans;
+
+}
 }
 // @lc code=end
 

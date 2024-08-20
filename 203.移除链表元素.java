@@ -5,6 +5,9 @@
  */
 
 // @lc code=start
+
+import java.util.List;
+
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -17,9 +20,18 @@
  */
 class Solution {
     public ListNode removeElements(ListNode head, int val) {
-        while (head) {
-            
+       ListNode dummy=new ListNode(-1,head);
+       ListNode cur=dummy;
+
+       while (cur.next!=null) {
+        if (cur.next.val==val) {
+            cur.next=cur.next.next;
+        }else
+        {
+            cur=cur.next;
         }
+       }
+       return  dummy.next;
 
     }
 }
